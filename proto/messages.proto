@@ -1,0 +1,191 @@
+syntax = "proto3";
+
+package mmorpg.proto;
+
+// ============================================
+// Packet wrapper - all messages are wrapped in this
+// ============================================
+message Packet {
+    uint32 type = 1;      // MessageType enum value
+    bytes payload = 2;    // Serialized message
+}
+
+// Message types
+enum MessageType {
+    MSG_UNKNOWN = 0;
+
+    // Authentication (1-99)
+    MSG_LOGIN_REQUEST = 1;
+    MSG_LOGIN_RESPONSE = 2;
+    MSG_LOGOUT = 3;
+
+    // Actor updates (100-199)
+    MSG_ACTOR_SPAWN = 100;
+    MSG_ACTOR_DESPAWN = 101;
+    MSG_ACTOR_UPDATE = 102;
+    MSG_ACTOR_LIST = 103;
+
+    // Combat (200-299)
+    MSG_ATTACK_REQUEST = 200;
+    MSG_ATTACK_RESULT = 201;
+    MSG_SKILL_REQUEST = 202;
+    MSG_SKILL_RESULT = 203;
+
+    // Skills (300-399)
+    MSG_LEARN_SKILL = 300;
+    MSG_UPGRADE_SKILL = 301;
+    MSG_SKILL_LIST = 302;
+
+    // Chat (400-499)
+    MSG_CHAT = 400;
+
+    // System (900-999)
+    MSG_PING = 900;
+    MSG_PONG = 901;
+    MSG_ERROR = 999;
+}
+
+// ============================================
+// Authentication messages
+// ============================================
+message LoginRequest {
+    string username = 1;
+    string password = 2;
+}
+
+message LoginResponse {
+    bool success = 1;
+    uint32 actor_id = 2;
+    string message = 3;
+    ActorInfo actor = 4;
+}
+
+message Logout {
+    uint32 actor_id = 1;
+}
+
+// ============================================
+// Actor messages
+// ============================================
+message Stats {
+    int32 strength = 1;
+    int32 agility = 2;
+    int32 intelligence = 3;
+    int32 vitality = 4;
+    int32 wisdom = 5;
+    int32 luck = 6;
+}
+
+message ActorInfo {
+    uint32 id = 1;
+    string name = 2;
+    int32 level = 3;
+    int32 current_hp = 4;
+    int32 max_hp = 5;
+    int32 current_mp = 6;
+    int32 max_mp = 7;
+    Stats stats = 8;
+    float pos_x = 9;
+    float pos_y = 10;
+}
+
+message ActorSpawn {
+    ActorInfo actor = 1;
+}
+
+message ActorDespawn {
+    uint32 actor_id = 1;
+}
+
+message ActorUpdate {
+    uint32 actor_id = 1;
+    int32 current_hp = 2;
+    int32 current_mp = 3;
+    float pos_x = 4;
+    float pos_y = 5;
+}
+
+message ActorList {
+    repeated ActorInfo actors = 1;
+}
+
+// ============================================
+// Combat messages
+// ============================================
+message AttackRequest {
+    uint32 target_id = 1;
+}
+
+message AttackResult {
+    uint32 attacker_id = 1;
+    uint32 target_id = 2;
+    int32 damage = 3;
+    bool is_critical = 4;
+    bool is_dodged = 5;
+    int32 target_hp = 6;
+}
+
+message SkillRequest {
+    uint32 skill_id = 1;
+    uint32 target_id = 2;
+}
+
+message SkillResult {
+    uint32 caster_id = 1;
+    uint32 skill_id = 2;
+    uint32 target_id = 3;
+    int32 damage = 4;
+    int32 heal = 5;
+    bool success = 6;
+    string message = 7;
+}
+
+// ============================================
+// Skill messages
+// ============================================
+message LearnSkill {
+    uint32 skill_id = 1;
+}
+
+message UpgradeSkill {
+    uint32 skill_id = 1;
+}
+
+message SkillInfo {
+    uint32 id = 1;
+    string name = 2;
+    int32 level = 3;
+    int32 max_level = 4;
+    int32 mana_cost = 5;
+    float cooldown = 6;
+}
+
+message SkillList {
+    repeated SkillInfo skills = 1;
+    int32 skill_points = 2;
+}
+
+// ============================================
+// Chat messages
+// ============================================
+message Chat {
+    uint32 sender_id = 1;
+    string sender_name = 2;
+    string message = 3;
+}
+
+// ============================================
+// System messages
+// ============================================
+message Ping {
+    uint64 timestamp = 1;
+}
+
+message Pong {
+    uint64 timestamp = 1;
+}
+
+message Error {
+    int32 code = 1;
+    string message = 2;
+}

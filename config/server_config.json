@@ -1,0 +1,15 @@
+{
+    "server": {
+        "port": 7777,
+        "tick_rate": 20
+    },
+    "network": {
+        "max_connections": 100,
+        "timeout_ms": 30000
+    },
+    "game": {
+        "starting_level": 1,
+        "starting_skill_points": 3,
+        "exp_multiplier": 1.0
+    }
+}

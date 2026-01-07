@@ -1,0 +1,23 @@
+# Build directory
+build/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Compiled files
+*.o
+*.a
+*.so
+*.dylib
+
+# Generated protobuf files
+src/proto/*.pb.cc
+src/proto/*.pb.h
+
+# OS files
+.DS_Store
+Thumbs.db
