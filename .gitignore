@@ -1,9 +1,15 @@
 # Build directory
 build/
 
-# IDE
-.vscode/
+# IDE (ignore local configs, keep templates)
+.vscode/*.json
+!.vscode/*.json.example
+!.vscode/extensions.json
 .idea/
+
+# Claude Code (ignore local configs, keep templates)
+.claude/settings.local.json
+!.claude/settings.local.json.example
 *.swp
 *.swo
 *~

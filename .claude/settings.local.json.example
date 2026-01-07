@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(clang++:*)",
+      "Bash(cmake:*)",
+      "Bash(ctest:*)",
+      "Bash(gdb:*)",
+      "Bash(protoc:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(git branch:*)",
+      "Bash(./build/*)",
+      "Skill(build-and-test)"
+    ]
+  }
+}
